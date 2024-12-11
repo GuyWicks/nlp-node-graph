@@ -1,0 +1,36 @@
+{% extends "base.html.j2" %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<h1>Natural Language Processing - Dependency Modelling</h1>
+
+<form action="/nlp">
+    <input type="text" name="q" value="{{query}}" autofocus size="100"><input type="submit">
+</form>
+<div width="100%" class="w3-container w3-center">
+    {{ nlp|safe }}
+</div>
+<table class="w3-table">
+    <tr>
+        <th>ID</th>
+        <th>lemma</th>
+        <th>POS</th>
+        <th>dep</th>
+        <th>head</th>
+    </tr>
+    {% for i in nlp_json.tokens %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.lemma }}</td>
+        <td>{{ i.pos }}</td>
+        <td>{{ i.dep }}</td>
+        <td>{{ i.head }}</td>
+        <td>{{ i.label }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<code>
+{{ nlp_json }}
+</code>
+{% endblock content %}

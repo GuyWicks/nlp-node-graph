@@ -1,0 +1,10 @@
+pytest
+pytest-dotenv
+pytest-watch
+
+icecream
+pyvis
+networkx
+fastapi[standard]
+jinja2
+spacy[apple]
