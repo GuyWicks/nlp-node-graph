@@ -59,4 +59,8 @@ Where 'red' is a 'colour' property (attribute) of a 'flower', and a rose is an i
 
 It doesn't!  Lots of working out to do!
 
-See [TODO](TODO.md) for 
+See [TODO](TODO.md) for everything I plan to do and fix!
+
+## References
+
+- [POS tags](https://universaldependencies.org/u/pos/)
