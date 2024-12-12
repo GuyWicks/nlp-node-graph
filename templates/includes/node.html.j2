@@ -1,0 +1,101 @@
+<div id="mynetwork" class="card-body"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var allNodes;
+    var allEdges;
+    var nodeColors;
+    var originalNodes;
+    var network;
+    var container;
+    var options, data;
+    var filter = {
+        item: '',
+        property: '',
+        value: []
+    };
+
+    // This method is responsible for drawing the graph, returns the drawn network
+    async function drawGraph() {
+        var container = document.getElementById('mynetwork');
+
+        // parsing and collecting nodes and edges from the python
+        //const node_data = await this.getJSON('/api/nodes/');
+        //const edge_data = await this.getJSON('/api/edges/');
+        let [node_data, edge_data] = await Promise.all([this.getJSON('/api/nodes'), this.getJSON('/api/edges')]);
+
+        nodes = new vis.DataSet(node_data);
+        edges = new vis.DataSet(edge_data);
+
+        nodeColors = {};
+        allNodes = nodes.get({ returnType: "Object" });
+        for (nodeId in allNodes) {
+            nodeColors[nodeId] = allNodes[nodeId].color;
+        }
+        allEdges = edges.get({ returnType: "Object" });
+
+        // adding nodes and edges to the graph
+        data = { nodes: nodes, edges: edges };
+
+        var options = {
+            "configure": {
+                "enabled": false
+            },
+            "edges": {
+                "color": {
+                    "inherit": true
+                },
+                "smooth": {
+                    "enabled": true,
+                    "type": "dynamic"
+                }
+            },
+            "interaction": {
+                "dragNodes": true,
+                "hideEdgesOnDrag": false,
+                "hideNodesOnDrag": false
+            },
+            "physics": {
+                "enabled": true,
+                "stabilization": {
+                    "enabled": true,
+                    "fit": false,
+                    "iterations": 100,
+                    "onlyDynamicEdges": false,
+                    "updateInterval": 100
+                }
+            }
+        };
+
+        network = new vis.Network(container, data, options);
+        return network;
+
+    }
+
+    function get_nodes() {
+        fetch('/api/nodes')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    async function getJSON(url) {
+        return fetch(url)
+            .then((response) => response.json())
+            .then((responseJson) => { return responseJson });
+    }
+
+    drawGraph();
+</script>
