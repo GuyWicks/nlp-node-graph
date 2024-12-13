@@ -1,6 +1,6 @@
 from icecream import ic as debug
 from functools import lru_cache
-import networkx
+import networkx as nx
 import ctypes
 
 
@@ -65,3 +65,6 @@ head; {t['head']}
             n.append(nodes[v])
 
         return n, edges
+
+    def to_network(self):
+        G = nx.Graph()

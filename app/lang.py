@@ -1,10 +1,9 @@
 from spacy import displacy
-
-import ctypes
+from app.config import debug
 from functools import lru_cache
+import ctypes
 
 
-# Ensure only a single instance of a class ever exists
 def singleton(cls, *args, **kw):
     instances = {}
 
@@ -95,3 +94,14 @@ class NLP:
 
     def rules(self):
         return self._rules
+
+    def nouns(self):
+        """
+        NLP.nouns()
+
+        Return a list of all the nouns and proper nouns
+        """
+        debug("hello")
+
+        for r in self.rules():
+            debug(r)

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from app.config import nlp_model
-from app.nlp import NLP
+from app.lang import NLP
 
 # from spacy import displacy
 

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
 from app.config import templates, debug
-from app.nlp import NLP
+from app.lang import NLP
 
 router = APIRouter()
 
@@ -23,16 +23,29 @@ def get_nlp(
     for t in doc["tokens"]:
         i += 1
         debug(t["lemma"])
-        node_data.append(
-            {
-                "color": "green",
-                "font": {"color": "white"},
-                "id": i,
-                "label": t["lemma"],
-                "shape": "box",
-                "size": 60,
-            }
-        )
+        match t["pos"]:
+            case "NOUN":
+                node_data.append(
+                    {
+                        "color": "green",
+                        "font": {"color": "white"},
+                        "id": i,
+                        "label": t["lemma"],
+                        "shape": "box",
+                        "size": 60,
+                    }
+                )
+            case "PROPN":
+                node_data.append(
+                    {
+                        "color": "green",
+                        "font": {"color": "white"},
+                        "id": i,
+                        "label": t["lemma"],
+                        "shape": "box",
+                        "size": 60,
+                    }
+                )
 
     return templates.TemplateResponse(
         request=request,

@@ -1,5 +1,5 @@
 from icecream import ic as print
-from app.nlp import NLP
+from app.lang import NLP
 from app.config import nlp_model
 
 
